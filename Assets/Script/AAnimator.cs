@@ -1,7 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+/// <summary>
+/// 1.动画播放.
+/// 2.动画融合.
+/// 3.混合树.
+/// 3.分层动画.
+/// 4.动画事件.
+/// </summary>
 public class AAnimator : MonoBehaviour {
 	public AnimationClip[] Animations;
 	public AnimationClip DeafultAnimationClip;
