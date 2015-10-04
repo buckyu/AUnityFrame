@@ -177,7 +177,7 @@ public abstract class AAnimationBase {
 		scaleInfo.Add(key, list);
 	}
 
-	protected List<string> JointsList{get{return Joints;}}
+	public List<string> JointsList{get{return Joints;}}
 	protected Dictionary<string, List<SQTData>> PositionsList{get{return positionInfo;}}
 	protected Dictionary<string, List<SQTData>> RotationList{get{return rotationInfo;}}
 	protected Dictionary<string, List<SQTData>>    ScaleList{get{return scaleInfo;}}

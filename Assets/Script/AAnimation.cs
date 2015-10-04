@@ -10,6 +10,16 @@ public class AAnimation : AAnimationBase
 	bool playing = false;
 	/// 局部时间线.
 	float localCurrentTime;
+
+	Vector3 curPosition;
+	Vector3 curScale;
+	Quaternion curQuaternion;
+
+	SQTData preFrameData;
+	SQTData nexFrameData;
+	string currentJointName;
+	float frameLerp;
+
 	public AAnimation Init(string name, AAnimator animator)
 	{
 		this.aAnimator = animator;
@@ -37,7 +47,6 @@ public class AAnimation : AAnimationBase
 			if(localCurrentTime>=stopTime)
 			{
 				localCurrentTime = stopTime;
-				RenderAnimation();
 				if(loop)
 				{
 					localCurrentTime = startTime;
@@ -47,34 +56,15 @@ public class AAnimation : AAnimationBase
 					Stop();
 				}
 			}
-			else
-			{
-				RenderAnimation();
-			}
 		}
 	}
-
-	SQTData preFrameData;
-	SQTData nexFrameData;
-	Transform currentJointTransform;
-	string currentJointName;
-	float frameLerp;
 	
-	void RenderAnimation()
+	public void UpdateSQT(string jointName)
 	{
-		int JointsCount = JointsList.Count;
-		for(int i=0;i<JointsCount;i++)
-		{
-			currentJointName = JointsList[i];
-			currentJointTransform = aAnimator.GetJointsByName(currentJointName);
-			if(currentJointTransform==null)
-			{
-				continue;
-			}
+			currentJointName = jointName;
 			UpdatePosition();
 			UpdateRotation();
 			UpdateScale();
-		}
 	}
 
 	void UpdatePosition()
@@ -83,7 +73,7 @@ public class AAnimation : AAnimationBase
 		List<SQTData> pList = PositionsList[currentJointName];
 		if(FindKeyFrames(pList))
 		{
-			currentJointTransform.localPosition = BezierTool.GetBezierPoint_T(frameLerp,(PositionData)preFrameData,(PositionData)nexFrameData,aAnimator.LerpType);
+			curPosition = BezierTool.GetBezierPoint_T(frameLerp,(PositionData)preFrameData,(PositionData)nexFrameData,aAnimator.LerpType);
 		}
 	}
 	
@@ -93,7 +83,7 @@ public class AAnimation : AAnimationBase
 		List<SQTData> pList = RotationList[currentJointName];
 		if(FindKeyFrames(pList))
 		{
-			currentJointTransform.localRotation = BezierTool.GetBezierPoint_Q(frameLerp,(RotationData)preFrameData,(RotationData)nexFrameData,aAnimator.LerpType);
+			curQuaternion = BezierTool.GetBezierPoint_Q(frameLerp,(RotationData)preFrameData,(RotationData)nexFrameData,aAnimator.LerpType);
 		}
 	}
 
@@ -103,7 +93,7 @@ public class AAnimation : AAnimationBase
 		List<SQTData> pList = ScaleList[currentJointName];
 		if(FindKeyFrames(pList))
 		{
-			currentJointTransform.localScale = BezierTool.GetBezierPoint_S(frameLerp,(ScaleData)preFrameData,(ScaleData)nexFrameData,aAnimator.LerpType);
+			curScale = BezierTool.GetBezierPoint_S(frameLerp,(ScaleData)preFrameData,(ScaleData)nexFrameData,aAnimator.LerpType);
 		}
 	}
 
@@ -130,4 +120,7 @@ public class AAnimation : AAnimationBase
 		}
 		return false;
 	}
+	public Vector3 CurPosition{get{return curPosition;}}
+	public Vector3 CurScale{get{return curScale;}}
+	public Quaternion CurQuaternion{get{return curQuaternion;}}
 }
