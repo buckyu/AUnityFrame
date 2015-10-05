@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.IO;
 using YamlDotNet.RepresentationModel;
 using System;
-public class SQTData
+public class YamlSQTData
 {
 	public float time;
 }
 
-public class RotationData : SQTData
+public class YamlRotationData : YamlSQTData
 {
 	public Quaternion value;
 	public Quaternion inSlope;
@@ -17,7 +17,7 @@ public class RotationData : SQTData
 	public float tangentMode;
 }
 
-public class PositionData : SQTData
+public class YamlPositionData : YamlSQTData
 {
 	public Vector3 value;
 	public Vector3 inSlope;
@@ -25,7 +25,7 @@ public class PositionData : SQTData
 	public float tangentMode;
 }
 
-public class ScaleData : SQTData
+public class YamlScaleData : YamlSQTData
 {
 	public Vector3 value;
 	public Vector3 inSlope;
@@ -51,11 +51,9 @@ public abstract class AAnimationBase {
 	private const string KEY_STOPTIME =  "m_StopTime";
 	private const string KEY_LOOPTIME =  "m_LoopTime";
 	//以关节名为键，存储了所有关节的位置，旋转和缩放信息.
-	private Dictionary<string, List<SQTData>> positionInfo = new Dictionary<string, List<SQTData>>();
-	private Dictionary<string, List<SQTData>> rotationInfo = new Dictionary<string, List<SQTData>>();
-	private Dictionary<string, List<SQTData>> scaleInfo    = new Dictionary<string, List<SQTData>>();
-	//所有关节的路径数组.
-	private List<string> Joints = new List<string>();
+	private Dictionary<string, List<YamlSQTData>> positionInfo = new Dictionary<string, List<YamlSQTData>>();
+	private Dictionary<string, List<YamlSQTData>> rotationInfo = new Dictionary<string, List<YamlSQTData>>();
+	private Dictionary<string, List<YamlSQTData>> scaleInfo    = new Dictionary<string, List<YamlSQTData>>();
 	YamlNode animationNode;
 	public string name = "";
 	protected float startTime;
@@ -106,11 +104,11 @@ public abstract class AAnimationBase {
 
 	void ParsePositionDataToList(YamlSequenceNode node, string key)
 	{
-		List<SQTData> list = new List<SQTData>();
+		List<YamlSQTData> list = new List<YamlSQTData>();
 		IList<YamlNode> nodeList = node.Children;
 		foreach(YamlMappingNode valueNode in nodeList)
 		{
-			PositionData postionData = new PositionData();
+			YamlPositionData postionData = new YamlPositionData();
 			postionData.time = float.Parse(EasyYaml.FindMapNodeByKey("time",valueNode).ToString());
 			postionData.value = GetVector3("value",valueNode);
 			postionData.inSlope = GetVector3("inSlope",valueNode);
@@ -118,7 +116,6 @@ public abstract class AAnimationBase {
 			postionData.tangentMode = float.Parse(EasyYaml.FindMapNodeByKey("tangentMode",valueNode).ToString());
 			list.Add(postionData);
 		}
-		Joints.Add(key);
 		positionInfo.Add(key,list);
 	}
 
@@ -135,10 +132,10 @@ public abstract class AAnimationBase {
 	void ParseRotationDataToList(YamlSequenceNode node, string key)
 	{
 		IList<YamlNode> nodeList = node.Children;
-		List<SQTData> list = new List<SQTData>();
+		List<YamlSQTData> list = new List<YamlSQTData>();
 		foreach(YamlMappingNode valueNode in nodeList)
 		{
-			RotationData rotationData = new RotationData();
+			YamlRotationData rotationData = new YamlRotationData();
 			rotationData.time = float.Parse(EasyYaml.FindMapNodeByKey("time",valueNode).ToString());
 			rotationData.value = GetQuaternion("value", valueNode);
 			rotationData.inSlope = GetQuaternion("inSlope", valueNode);
@@ -163,10 +160,10 @@ public abstract class AAnimationBase {
 	void ParseScaleInfoToList(YamlSequenceNode node, string key)
 	{
 		IList<YamlNode> nodeList = node.Children;
-		List<SQTData> list = new List<SQTData>();
+		List<YamlSQTData> list = new List<YamlSQTData>();
 		foreach(YamlMappingNode valueNode in nodeList)
 		{
-			ScaleData scaleData = new ScaleData();
+			YamlScaleData scaleData = new YamlScaleData();
 			scaleData.time = float.Parse(EasyYaml.FindMapNodeByKey("time",valueNode).ToString());
 			scaleData.value = GetVector3("value",valueNode);
 			scaleData.inSlope = GetVector3("inSlope",valueNode);
@@ -177,8 +174,7 @@ public abstract class AAnimationBase {
 		scaleInfo.Add(key, list);
 	}
 
-	public List<string> JointsList{get{return Joints;}}
-	protected Dictionary<string, List<SQTData>> PositionsList{get{return positionInfo;}}
-	protected Dictionary<string, List<SQTData>> RotationList{get{return rotationInfo;}}
-	protected Dictionary<string, List<SQTData>>    ScaleList{get{return scaleInfo;}}
+	protected Dictionary<string, List<YamlSQTData>> PositionsList{get{return positionInfo;}}
+	protected Dictionary<string, List<YamlSQTData>> RotationList{get{return rotationInfo;}}
+	protected Dictionary<string, List<YamlSQTData>>    ScaleList{get{return scaleInfo;}}
 }

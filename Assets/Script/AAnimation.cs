@@ -1,6 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public struct SQT
+{
+	public float	  Weight;
+	public Vector3 	  Scale;
+	public Vector3    Position;
+	public Quaternion Rotation;
+}
+
 /// <summary>
 /// 先用局部时间来维护动作播放进度.
 /// </summary>
@@ -10,13 +19,10 @@ public class AAnimation : AAnimationBase
 	bool playing = false;
 	/// 局部时间线.
 	float localCurrentTime;
+	SQT CurentSQT = new SQT();
 
-	Vector3 curPosition;
-	Vector3 curScale;
-	Quaternion curQuaternion;
-
-	SQTData preFrameData;
-	SQTData nexFrameData;
+	YamlSQTData preFrameData;
+	YamlSQTData nexFrameData;
 	string currentJointName;
 	float frameLerp;
 
@@ -25,89 +31,92 @@ public class AAnimation : AAnimationBase
 		this.aAnimator = animator;
 		this.name = name;
 		ReadAnimationFile(name);
-		return this;
-	}
-	
-	public void Play()
-	{
-		playing = true;
 		localCurrentTime = startTime;
-	}
-
-	public void Stop()
-	{
-		playing = false;
+		return this;
 	}
 
 	public void Update(float dealtTime)
 	{
-		if(playing)
+		localCurrentTime += dealtTime;
+		if(localCurrentTime>=stopTime)
 		{
-			localCurrentTime += dealtTime;
-			if(localCurrentTime>=stopTime)
+			localCurrentTime = stopTime;
+			if(loop)
 			{
-				localCurrentTime = stopTime;
-				if(loop)
-				{
-					localCurrentTime = startTime;
-				}
-				else
-				{
-					Stop();
-				}
+				localCurrentTime = startTime;
+			}
+			else
+			{
+				//
 			}
 		}
 	}
 	
-	public void UpdateSQT(string jointName)
+	public SQT UpdateSQT(string jointName)
 	{
-			currentJointName = jointName;
+		currentJointName = jointName;
+		if(PositionsList.ContainsKey(currentJointName))
+		{
+			CurentSQT.Weight = 1;
 			UpdatePosition();
 			UpdateRotation();
 			UpdateScale();
+		}
+		else //如果找不到该关节，则把权重设为0，不再参与接下来的计算(除了容错以外还可用于遮罩功能).
+		{
+			CurentSQT.Weight = 0;
+		}
+		return CurentSQT;
 	}
 
 	void UpdatePosition()
 	{
 		//更新每一根关节的位置.
-		List<SQTData> pList = PositionsList[currentJointName];
+		List<YamlSQTData> pList = PositionsList[currentJointName];
 		if(FindKeyFrames(pList))
 		{
-			curPosition = BezierTool.GetBezierPoint_T(frameLerp,(PositionData)preFrameData,(PositionData)nexFrameData,aAnimator.LerpType);
+			CurentSQT.Position = BezierTool.GetBezierPoint_T(frameLerp,(YamlPositionData)preFrameData,(YamlPositionData)nexFrameData,aAnimator.LerpType);
 		}
 	}
 	
 	void UpdateRotation()
 	{
 		//更新每一根关节的旋转信息.
-		List<SQTData> pList = RotationList[currentJointName];
+		List<YamlSQTData> pList = RotationList[currentJointName];
 		if(FindKeyFrames(pList))
 		{
-			curQuaternion = BezierTool.GetBezierPoint_Q(frameLerp,(RotationData)preFrameData,(RotationData)nexFrameData,aAnimator.LerpType);
+			CurentSQT.Rotation = BezierTool.GetBezierPoint_Q(frameLerp,(YamlRotationData)preFrameData,(YamlRotationData)nexFrameData,aAnimator.LerpType);
 		}
 	}
 
 	void UpdateScale()
 	{
 		//更新每一根关节的缩放信息.
-		List<SQTData> pList = ScaleList[currentJointName];
+		List<YamlSQTData> pList = ScaleList[currentJointName];
 		if(FindKeyFrames(pList))
 		{
-			curScale = BezierTool.GetBezierPoint_S(frameLerp,(ScaleData)preFrameData,(ScaleData)nexFrameData,aAnimator.LerpType);
+			CurentSQT.Scale = BezierTool.GetBezierPoint_S(frameLerp,(YamlScaleData)preFrameData,(YamlScaleData)nexFrameData,aAnimator.LerpType);
 		}
 	}
 
-	bool FindKeyFrames(List<SQTData> sqtList)
+	///找到前后两个关键帧的信息，如果找不到，则保持原有动作.
+	bool FindKeyFrames(List<YamlSQTData> sqtList)
 	{
-		//找到前后两个关键帧.
 		int listCount = sqtList.Count;
 		for(int j=0;j<listCount;j++)
 		{
 			if(localCurrentTime<=sqtList[j].time)
 			{
 				nexFrameData = sqtList[j];
-				preFrameData = sqtList[j-1];
-				if(nexFrameData.time-localCurrentTime==0)
+				if(j==0)
+				{
+					preFrameData = nexFrameData;
+				}
+				else
+				{
+					preFrameData = sqtList[j-1];
+				}
+				if(nexFrameData.time-preFrameData.time==0)
 				{
 					frameLerp = 1;
 				}
@@ -120,7 +129,4 @@ public class AAnimation : AAnimationBase
 		}
 		return false;
 	}
-	public Vector3 CurPosition{get{return curPosition;}}
-	public Vector3 CurScale{get{return curScale;}}
-	public Quaternion CurQuaternion{get{return curQuaternion;}}
 }

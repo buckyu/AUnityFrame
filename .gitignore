@@ -44,3 +44,8 @@ Temporary Items
 
 Library/
 Temp/
+
+*.csproj
+*.csproj
+*.csproj
+Assembly-CSharp.csproj

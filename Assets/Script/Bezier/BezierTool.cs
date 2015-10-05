@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public enum LerpType
@@ -16,7 +16,7 @@ public class BezierTool
 	}
 
 	/// t-->[0,1]
-	public static Vector3 GetBezierPoint_S(float t, ScaleData preData, ScaleData nexData, LerpType lerpType)
+	public static Vector3 GetBezierPoint_S(float t, YamlScaleData preData, YamlScaleData nexData, LerpType lerpType)
 	{
 		Vector3 scale;
 		if(lerpType==LerpType.LineLerp)
@@ -31,7 +31,7 @@ public class BezierTool
 	}
 
 	/// t-->[0,1]
-	public static Quaternion GetBezierPoint_Q(float t, RotationData preData, RotationData nexData, LerpType lerpType)
+	public static Quaternion GetBezierPoint_Q(float t, YamlRotationData preData, YamlRotationData nexData, LerpType lerpType)
 	{
 		Quaternion rotation = new Quaternion();
 		if(lerpType==LerpType.LineLerp)
@@ -49,7 +49,7 @@ public class BezierTool
 	}
 
 	/// t-->[0,1]
-	public static Vector3 GetBezierPoint_T(float t, PositionData preData, PositionData nexData, LerpType lerpType)
+	public static Vector3 GetBezierPoint_T(float t, YamlPositionData preData, YamlPositionData nexData, LerpType lerpType)
 	{
 		Vector3 position;
 		if(lerpType==LerpType.LineLerp)

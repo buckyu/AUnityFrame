@@ -27,18 +27,21 @@ public class AAnimator : MonoBehaviour {
 	public AnimationClip   sourceClip;
 	public AnimationClip   targetClip;
 	public EAniTrigger trigger;
+
+	private float transitionWight = 0;
+	private List<string> JointsList = new List<string>();
 	void Start () {
 		foreach(AnimationClip clip in Animations)
 		{
 			AAnimations.Add(clip.name, new AAnimation().Init(clip.name,this));
 		}
+		JointsList = ToolTraversal.Traversal(transform.Find("000"),"");
 		Test();
 	}
 
 	void Test()
 	{
 		currentAAnimation = AAnimations[DeafultAnimationClip.name];
-		currentAAnimation.Play();
 	}
 
 	// Update is called once per frame
@@ -46,22 +49,31 @@ public class AAnimator : MonoBehaviour {
 		if(currentAAnimation!=null)
 		{
 			currentAAnimation.Update(Time.deltaTime);
-			int JointsCount = currentAAnimation.JointsList.Count;
+			if(targetAAnimation!=null)
+			{
+				targetAAnimation.Update(Time.deltaTime);
+			}
+			int JointsCount = JointsList.Count;
 			for(int i=0;i<JointsCount;i++)
 			{
-				jointName = currentAAnimation.JointsList[i];
+				jointName = JointsList[i];
 				currentJointTransform = GetJointsByName(jointName);
 				if(currentJointTransform==null)
 				{
 					continue;
 				}
 				currentAAnimation.UpdateSQT(jointName);
-				currentJointTransform.localPosition = currentAAnimation.CurPosition;
-				currentJointTransform.localRotation = currentAAnimation.CurQuaternion;
-				currentJointTransform.localScale    = currentAAnimation.CurScale;
+//				currentJointTransform.localPosition = Vector3.Lerp(currentAAnimation.CurPosition,targetAAnimation.CurPosition,transitionWight);
+//				currentJointTransform.localRotation = Quaternion.Slerp(currentAAnimation.CurQuaternion,targetAAnimation.CurQuaternion,transitionWight);
+//				currentJointTransform.localScale    = Vector3.Lerp(currentAAnimation.CurScale,targetAAnimation.CurScale,transitionWight);
 			}
 		}
 	}
+
+//	SQT GetAAnimationSQT(AAnimation aAnimation)
+//	{
+//
+//	}
 
 	public void SetTrigger(EAniTrigger value)
 	{

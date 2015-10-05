@@ -50,11 +50,12 @@
      <Compile Include="Assets\Script\AAnimation.cs" />
      <Compile Include="Assets\Script\AAnimationBase.cs" />
      <Compile Include="Assets\Script\AAnimator.cs" />
-     <Compile Include="Assets\Script\AMain.cs" />
+     <Compile Include="Assets\Script\AMecanimTest.cs" />
      <Compile Include="Assets\Script\AnimationEventReciever.cs" />
      <Compile Include="Assets\Script\AnimationPlayer.cs" />
      <Compile Include="Assets\Script\Bezier\BezierTool.cs" />
      <Compile Include="Assets\Script\EasyYaml.cs" />
+     <Compile Include="Assets\Script\Tool\ToolTraversal.cs" />
      <None Include="Assets\Plugins\Yaml\YamlDotNet.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
