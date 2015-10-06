@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// 1.动画播放.
-/// 2.动画融合.
-/// 3.混合树.
-/// 3.分层动画.
-/// 4.动画事件.
+/// 1.动画播放.(done 2015/10/03)
+/// 2.动画融合.(done 2015/10/06)
+/// 3.状态机解析和实现.
+/// 4.混合树.
+/// 5.分层动画.
+/// 6.动画事件.
 /// </summary>
 public class AAnimator : MonoBehaviour {
 	public AnimationClip[] Animations;

@@ -83,7 +83,7 @@ public class AAnimation : AAnimationBase
 		if(FindKeyFrames(pList))
 		{
 			CurentSQT.Position_Weight = 1;
-			CurentSQT.Position = BezierTool.GetBezierPoint_T(frameLerp,(YamlPositionData)preFrameData,(YamlPositionData)nexFrameData,aAnimator.LerpType);
+			CurentSQT.Position = HermiteTool.GetHermitePoint_T(frameLerp,(YamlPositionData)preFrameData,(YamlPositionData)nexFrameData,aAnimator.LerpType);
 		}
 		else
 		{
@@ -98,7 +98,7 @@ public class AAnimation : AAnimationBase
 		if(FindKeyFrames(pList))
 		{
 			CurentSQT.Rotation_Weight = 1;
-			CurentSQT.Rotation = BezierTool.GetBezierPoint_Q(frameLerp,(YamlRotationData)preFrameData,(YamlRotationData)nexFrameData,aAnimator.LerpType);
+			CurentSQT.Rotation = HermiteTool.GetHermitePoint_Q(frameLerp,(YamlRotationData)preFrameData,(YamlRotationData)nexFrameData,aAnimator.LerpType);
 		}
 		else
 		{
@@ -113,7 +113,7 @@ public class AAnimation : AAnimationBase
 		if(FindKeyFrames(pList))
 		{
 			CurentSQT.Scale_Weight = 1;
-			CurentSQT.Scale = BezierTool.GetBezierPoint_S(frameLerp,(YamlScaleData)preFrameData,(YamlScaleData)nexFrameData,aAnimator.LerpType);
+			CurentSQT.Scale = HermiteTool.GetHermitePoint_S(frameLerp,(YamlScaleData)preFrameData,(YamlScaleData)nexFrameData,aAnimator.LerpType);
 		}
 		else
 		{

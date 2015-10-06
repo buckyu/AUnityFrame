@@ -46,15 +46,14 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Resources\BezierTest\BezierTest.cs" />
      <Compile Include="Assets\Script\AAnimation.cs" />
      <Compile Include="Assets\Script\AAnimationBase.cs" />
      <Compile Include="Assets\Script\AAnimator.cs" />
      <Compile Include="Assets\Script\AMecanimTest.cs" />
      <Compile Include="Assets\Script\AnimationEventReciever.cs" />
      <Compile Include="Assets\Script\AnimationPlayer.cs" />
-     <Compile Include="Assets\Script\Bezier\BezierTool.cs" />
      <Compile Include="Assets\Script\EasyYaml.cs" />
+     <Compile Include="Assets\Script\Hermite\HermiteTool.cs" />
      <Compile Include="Assets\Script\Tool\ToolSQT.cs" />
      <Compile Include="Assets\Script\Tool\ToolTraversal.cs" />
      <None Include="Assets\Plugins\Yaml\YamlDotNet.xml" />
