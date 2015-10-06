@@ -55,6 +55,7 @@
      <Compile Include="Assets\Script\AnimationPlayer.cs" />
      <Compile Include="Assets\Script\Bezier\BezierTool.cs" />
      <Compile Include="Assets\Script\EasyYaml.cs" />
+     <Compile Include="Assets\Script\Tool\ToolSQT.cs" />
      <Compile Include="Assets\Script\Tool\ToolTraversal.cs" />
      <None Include="Assets\Plugins\Yaml\YamlDotNet.xml" />
  <Reference Include="UnityEngine.UI">

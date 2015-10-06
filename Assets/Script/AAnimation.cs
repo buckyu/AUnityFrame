@@ -4,10 +4,18 @@ using UnityEngine;
 
 public struct SQT
 {
-	public float	  Weight;
 	public Vector3 	  Scale;
+	public float	  Scale_Weight;
 	public Vector3    Position;
+	public float      Position_Weight;
 	public Quaternion Rotation;
+	public float      Rotation_Weight;
+	public void SetAllWeight(float value)
+	{
+		Scale_Weight = 0;
+		Position_Weight = 0;
+		Rotation_Weight = 0;
+	}
 }
 
 /// <summary>
@@ -57,14 +65,13 @@ public class AAnimation : AAnimationBase
 		currentJointName = jointName;
 		if(PositionsList.ContainsKey(currentJointName))
 		{
-			CurentSQT.Weight = 1;
 			UpdatePosition();
 			UpdateRotation();
 			UpdateScale();
 		}
 		else //如果找不到该关节，则把权重设为0，不再参与接下来的计算(除了容错以外还可用于遮罩功能).
 		{
-			CurentSQT.Weight = 0;
+			CurentSQT.SetAllWeight(0);
 		}
 		return CurentSQT;
 	}
@@ -75,7 +82,12 @@ public class AAnimation : AAnimationBase
 		List<YamlSQTData> pList = PositionsList[currentJointName];
 		if(FindKeyFrames(pList))
 		{
+			CurentSQT.Position_Weight = 1;
 			CurentSQT.Position = BezierTool.GetBezierPoint_T(frameLerp,(YamlPositionData)preFrameData,(YamlPositionData)nexFrameData,aAnimator.LerpType);
+		}
+		else
+		{
+			CurentSQT.Position_Weight = 0;
 		}
 	}
 	
@@ -85,7 +97,12 @@ public class AAnimation : AAnimationBase
 		List<YamlSQTData> pList = RotationList[currentJointName];
 		if(FindKeyFrames(pList))
 		{
+			CurentSQT.Rotation_Weight = 1;
 			CurentSQT.Rotation = BezierTool.GetBezierPoint_Q(frameLerp,(YamlRotationData)preFrameData,(YamlRotationData)nexFrameData,aAnimator.LerpType);
+		}
+		else
+		{
+			CurentSQT.Rotation_Weight = 0;
 		}
 	}
 
@@ -95,7 +112,12 @@ public class AAnimation : AAnimationBase
 		List<YamlSQTData> pList = ScaleList[currentJointName];
 		if(FindKeyFrames(pList))
 		{
+			CurentSQT.Scale_Weight = 1;
 			CurentSQT.Scale = BezierTool.GetBezierPoint_S(frameLerp,(YamlScaleData)preFrameData,(YamlScaleData)nexFrameData,aAnimator.LerpType);
+		}
+		else
+		{
+			CurentSQT.Scale_Weight = 0;
 		}
 	}
 

@@ -2,11 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Transition
-{
-
-}
-
 /// <summary>
 /// 1.动画播放.
 /// 2.动画融合.
@@ -22,6 +17,9 @@ public class AAnimator : MonoBehaviour {
 	private Dictionary<string, Transform>  ABones	   = new Dictionary<string, Transform>();
 	string jointName;
 	AAnimation currentAAnimation;
+	SQT currentSQT = new SQT();
+	SQT targetSQT = new SQT();
+	SQT reallySQT = new SQT();
 	AAnimation targetAAnimation;
 	Transform currentJointTransform;
 	public AnimationClip   sourceClip;
@@ -36,6 +34,10 @@ public class AAnimator : MonoBehaviour {
 			AAnimations.Add(clip.name, new AAnimation().Init(clip.name,this));
 		}
 		JointsList = ToolTraversal.Traversal(transform.Find("000"),"");
+		foreach(string name in JointsList)
+		{
+			GetJointsByName(name);
+		}
 		Test();
 	}
 
@@ -52,6 +54,15 @@ public class AAnimator : MonoBehaviour {
 			if(targetAAnimation!=null)
 			{
 				targetAAnimation.Update(Time.deltaTime);
+				transitionWight += Time.deltaTime*5;
+				//过渡结束.
+				if(transitionWight>=1)
+				{
+					transitionWight = 0;
+					currentAAnimation = targetAAnimation;
+					targetAAnimation = null;
+					reallySQT = targetSQT;
+				}
 			}
 			int JointsCount = JointsList.Count;
 			for(int i=0;i<JointsCount;i++)
@@ -62,22 +73,30 @@ public class AAnimator : MonoBehaviour {
 				{
 					continue;
 				}
-				currentAAnimation.UpdateSQT(jointName);
-//				currentJointTransform.localPosition = Vector3.Lerp(currentAAnimation.CurPosition,targetAAnimation.CurPosition,transitionWight);
-//				currentJointTransform.localRotation = Quaternion.Slerp(currentAAnimation.CurQuaternion,targetAAnimation.CurQuaternion,transitionWight);
-//				currentJointTransform.localScale    = Vector3.Lerp(currentAAnimation.CurScale,targetAAnimation.CurScale,transitionWight);
+				currentSQT = currentAAnimation.UpdateSQT(jointName);
+				if(targetAAnimation!=null)
+				{
+					targetSQT = targetAAnimation.UpdateSQT(jointName);
+				}
+				else
+				{
+					targetSQT.SetAllWeight(0);
+				}
+				reallySQT = ToolSQT.Lerp(currentSQT,targetSQT,transitionWight);
+				if(reallySQT.Position_Weight!=0)
+					currentJointTransform.localPosition = reallySQT.Position;
+				if(reallySQT.Rotation_Weight!=0)
+					currentJointTransform.localRotation = reallySQT.Rotation;
+				if(reallySQT.Scale_Weight!=0)
+					currentJointTransform.localScale    = reallySQT.Scale;
 			}
 		}
 	}
 
-//	SQT GetAAnimationSQT(AAnimation aAnimation)
-//	{
-//
-//	}
-
 	public void SetTrigger(EAniTrigger value)
 	{
-
+		targetAAnimation = AAnimations[targetClip.name];
+		transitionWight = 0;
 	}
 
 

@@ -110,7 +110,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 11400000, guid: 034db7205b7e28e4fb173f45c9f09dcc, type: 2}
       propertyPath: Animations.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400072, guid: 034db7205b7e28e4fb173f45c9f09dcc, type: 2}
       propertyPath: m_LocalPosition.x
@@ -151,7 +151,7 @@ Prefab:
     - target: {fileID: 11400000, guid: 034db7205b7e28e4fb173f45c9f09dcc, type: 2}
       propertyPath: DeafultAnimationClip
       value: 
-      objectReference: {fileID: 7400000, guid: c4babebd4e043f744af86d3b7f39130e, type: 2}
+      objectReference: {fileID: 7400000, guid: 8e87e017f3f787343a17b2e6a45a40ec, type: 2}
     - target: {fileID: 11400000, guid: 034db7205b7e28e4fb173f45c9f09dcc, type: 2}
       propertyPath: LerpType
       value: 1
@@ -159,15 +159,15 @@ Prefab:
     - target: {fileID: 11400000, guid: 034db7205b7e28e4fb173f45c9f09dcc, type: 2}
       propertyPath: Animations.Array.data[2]
       value: 
-      objectReference: {fileID: 7400000, guid: c4babebd4e043f744af86d3b7f39130e, type: 2}
+      objectReference: {fileID: 7400000, guid: 21d021cbc22ddf74ebe3c0e3a6f805da, type: 2}
     - target: {fileID: 11400000, guid: 034db7205b7e28e4fb173f45c9f09dcc, type: 2}
       propertyPath: sourceClip
       value: 
-      objectReference: {fileID: 7400000, guid: c4babebd4e043f744af86d3b7f39130e, type: 2}
+      objectReference: {fileID: 7400000, guid: 8e87e017f3f787343a17b2e6a45a40ec, type: 2}
     - target: {fileID: 11400000, guid: 034db7205b7e28e4fb173f45c9f09dcc, type: 2}
       propertyPath: targetClip
       value: 
-      objectReference: {fileID: 7400000, guid: 21d021cbc22ddf74ebe3c0e3a6f805da, type: 2}
+      objectReference: {fileID: 7400000, guid: c4babebd4e043f744af86d3b7f39130e, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 034db7205b7e28e4fb173f45c9f09dcc, type: 2}
   m_RootGameObject: {fileID: 1784218257}
@@ -385,7 +385,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &160842673
 Transform:
   m_ObjectHideFlags: 0
@@ -2042,7 +2042,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100072, guid: 771e504aa96016c4ea061099379dc15a, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 771e504aa96016c4ea061099379dc15a, type: 2}
@@ -2095,11 +2095,12 @@ MonoBehaviour:
   Animations:
   - {fileID: 7400000, guid: c4babebd4e043f744af86d3b7f39130e, type: 2}
   - {fileID: 7400000, guid: 8e87e017f3f787343a17b2e6a45a40ec, type: 2}
-  DeafultAnimationClip: {fileID: 7400000, guid: c4babebd4e043f744af86d3b7f39130e,
+  - {fileID: 7400000, guid: 21d021cbc22ddf74ebe3c0e3a6f805da, type: 2}
+  DeafultAnimationClip: {fileID: 7400000, guid: 8e87e017f3f787343a17b2e6a45a40ec,
     type: 2}
   LerpType: 1
-  sourceClip: {fileID: 7400000, guid: c4babebd4e043f744af86d3b7f39130e, type: 2}
-  targetClip: {fileID: 7400000, guid: 21d021cbc22ddf74ebe3c0e3a6f805da, type: 2}
+  sourceClip: {fileID: 7400000, guid: 8e87e017f3f787343a17b2e6a45a40ec, type: 2}
+  targetClip: {fileID: 7400000, guid: c4babebd4e043f744af86d3b7f39130e, type: 2}
   trigger: 0
 --- !u!114 &1784218260
 MonoBehaviour:
@@ -2245,7 +2246,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1849307962}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -1.62920685e-07}
-  m_LocalPosition: {x: .949999988, y: 1.26999998, z: 4.28000021}
+  m_LocalPosition: {x: -0, y: 1.26999998, z: 4.28000021}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
