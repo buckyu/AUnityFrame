@@ -151,7 +151,7 @@ Prefab:
     - target: {fileID: 11400000, guid: 034db7205b7e28e4fb173f45c9f09dcc, type: 2}
       propertyPath: DeafultAnimationClip
       value: 
-      objectReference: {fileID: 7400000, guid: 8e87e017f3f787343a17b2e6a45a40ec, type: 2}
+      objectReference: {fileID: 7400000, guid: c4babebd4e043f744af86d3b7f39130e, type: 2}
     - target: {fileID: 11400000, guid: 034db7205b7e28e4fb173f45c9f09dcc, type: 2}
       propertyPath: LerpType
       value: 1
@@ -166,6 +166,10 @@ Prefab:
       objectReference: {fileID: 7400000, guid: 8e87e017f3f787343a17b2e6a45a40ec, type: 2}
     - target: {fileID: 11400000, guid: 034db7205b7e28e4fb173f45c9f09dcc, type: 2}
       propertyPath: targetClip
+      value: 
+      objectReference: {fileID: 7400000, guid: c4babebd4e043f744af86d3b7f39130e, type: 2}
+    - target: {fileID: 11400000, guid: 034db7205b7e28e4fb173f45c9f09dcc, type: 2}
+      propertyPath: Animations.Array.data[0]
       value: 
       objectReference: {fileID: 7400000, guid: c4babebd4e043f744af86d3b7f39130e, type: 2}
     m_RemovedComponents: []
@@ -266,7 +270,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 130711489}
-  - 114: {fileID: 130711488}
   m_Layer: 0
   m_Name: AMain
   m_TagString: Untagged
@@ -274,18 +277,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &130711488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 1b8141014fbcc244fa26787508a819e3,
-    type: 2}
-  m_PrefabInternal: {fileID: 139157606}
-  m_GameObject: {fileID: 130711487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c693be8ef06a4f469ff9be29df39d31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &130711489
 Transform:
   m_ObjectHideFlags: 0
@@ -364,7 +355,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11400000, guid: 1b8141014fbcc244fa26787508a819e3, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 1b8141014fbcc244fa26787508a819e3, type: 2}
   m_RootGameObject: {fileID: 130711487}
   m_IsPrefabParent: 0
@@ -2096,7 +2088,7 @@ MonoBehaviour:
   - {fileID: 7400000, guid: c4babebd4e043f744af86d3b7f39130e, type: 2}
   - {fileID: 7400000, guid: 8e87e017f3f787343a17b2e6a45a40ec, type: 2}
   - {fileID: 7400000, guid: 21d021cbc22ddf74ebe3c0e3a6f805da, type: 2}
-  DeafultAnimationClip: {fileID: 7400000, guid: 8e87e017f3f787343a17b2e6a45a40ec,
+  DeafultAnimationClip: {fileID: 7400000, guid: c4babebd4e043f744af86d3b7f39130e,
     type: 2}
   LerpType: 1
   sourceClip: {fileID: 7400000, guid: 8e87e017f3f787343a17b2e6a45a40ec, type: 2}

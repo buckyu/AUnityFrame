@@ -49,3 +49,7 @@ Temp/
 *.csproj
 *.csproj
 Assembly-CSharp.csproj
+*.sln
+*.userprefs
+*.userprefs
+*.csproj

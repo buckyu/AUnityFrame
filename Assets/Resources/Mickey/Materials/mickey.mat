@@ -22,13 +22,6 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _BumpMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
           name: _EnvMask
         second:
           m_Texture: {fileID: 0}
@@ -44,10 +37,6 @@ Material:
     m_Floats:
       data:
         first:
-          name: _Shininess
-        second: .078125
-      data:
-        first:
           name: _Alpha
         second: 1
       data:
@@ -59,7 +48,3 @@ Material:
         first:
           name: _Color
         second: {r: .490196079, g: .490196079, b: .490196079, a: .490196079}
-      data:
-        first:
-          name: _SpecColor
-        second: {r: .5, g: .5, b: .5, a: 1}

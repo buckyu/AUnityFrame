@@ -1050,6 +1050,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Animations:
   - {fileID: 7400000, guid: c4babebd4e043f744af86d3b7f39130e, type: 2}
+  DeafultAnimationClip: {fileID: 0}
+  LerpType: 0
+  sourceClip: {fileID: 0}
+  targetClip: {fileID: 0}
+  trigger: 0
 --- !u!137 &13700000
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
