@@ -26,10 +26,14 @@ public class AAnimator : MonoBehaviour {
 	public AnimationClip   sourceClip;
 	public AnimationClip   targetClip;
 	public EAniTrigger trigger;
-
+	public bool drawJoints = false;
 	private float transitionWight = 0;
-	private List<string> JointsList = new List<string>();
+	//这两个字段暴露出来给编辑器用.
+	public static List<string> JointsList = new List<string>();
+	public static Dictionary<string,bool> JointMaskDic = new Dictionary<string, bool>();
+	//这两个字段暴露出来给编辑器用.
 	void Start () {
+		Speed = 1;
 		foreach(AnimationClip clip in Animations)
 		{
 			AAnimations.Add(clip.name, new AAnimation().Init(clip.name,this));
@@ -38,10 +42,13 @@ public class AAnimator : MonoBehaviour {
 		foreach(string name in JointsList)
 		{
 			GetJointsByName(name);
+//			Debug.Log (name);
 		}
+
 		Test();
 	}
 
+	public Transform jointRes;
 	void Test()
 	{
 		currentAAnimation = AAnimations[DeafultAnimationClip.name];
@@ -51,10 +58,11 @@ public class AAnimator : MonoBehaviour {
 	void Update () {
 		if(currentAAnimation!=null)
 		{
-			currentAAnimation.Update(Time.deltaTime);
+			//更新动画的局部时间.
+			currentAAnimation.Update(Time.deltaTime*Speed);
 			if(targetAAnimation!=null)
 			{
-				targetAAnimation.Update(Time.deltaTime);
+				targetAAnimation.Update(Time.deltaTime*Speed);
 				transitionWight += Time.deltaTime*5;
 				//过渡结束.
 				if(transitionWight>=1)
@@ -65,14 +73,29 @@ public class AAnimator : MonoBehaviour {
 					reallySQT = targetSQT;
 				}
 			}
+			//更新动画数据.
 			int JointsCount = JointsList.Count;
 			for(int i=0;i<JointsCount;i++)
 			{
 				jointName = JointsList[i];
+				//如果设置了骨骼遮罩，则直接返回.
+				if(JointMaskDic.ContainsKey(jointName)&&JointMaskDic[jointName])
+				{
+					continue;
+				}
 				currentJointTransform = GetJointsByName(jointName);
 				if(currentJointTransform==null)
 				{
 					continue;
+				}
+				Transform joint = DrawJoints(jointName);
+				if(joint!=null)
+				{
+					joint.parent = currentJointTransform;
+					joint.localScale = new Vector3(0.1f,0.1f,0.1f);
+					joint.localPosition = Vector3.zero;
+					joint.localRotation = Quaternion.identity;
+					joint.gameObject.SetActive(drawJoints);
 				}
 				currentSQT = currentAAnimation.UpdateSQT(jointName);
 				if(targetAAnimation!=null)
@@ -93,6 +116,41 @@ public class AAnimator : MonoBehaviour {
 			}
 		}
 	}
+	/*--------------------------------------------演示 begin--------------------------------------------*/
+	Dictionary<string, Transform> JointsDic = new Dictionary<string, Transform>();
+	List<string> ignorJoint = new List<string>(){"000","root","jiaoxia","center","toubu","zuoshou","youshou","beibu","zhongxin"};
+	private Transform DrawJoints(string name)
+	{
+		name = GetLastName(name);
+		if(ignorJoint.Contains(name))
+		{
+			return null;
+		}
+		if(JointsDic.ContainsKey(name))
+		{
+			return JointsDic[name];
+		}
+		Transform joint = Instantiate(jointRes) as Transform;
+		joint.name = name+"_joint";
+		JointsDic.Add(name,joint);
+		return joint;
+	}
+
+	string GetLastName(string value)
+	{
+		string[] temp = value.Split('/');
+		return temp[temp.Length-1];
+	}
+
+	SkinnedMeshRenderer skin;
+	public void SetAlpha(float alpha)
+	{
+		if(skin==null)
+			skin = transform.GetComponentInChildren<SkinnedMeshRenderer>();
+		skin.material.SetFloat("_Alpha",alpha);
+	}
+	/*--------------------------------------------演示 end--------------------------------------------*/
+	
 
 	public void SetTrigger(EAniTrigger value)
 	{
@@ -111,4 +169,7 @@ public class AAnimator : MonoBehaviour {
 		ABones.Add(pathName,result);
 		return result;
 	}
+
+	public float Speed{get;set;}
+	public bool ShowJoint{set;get;}
 }

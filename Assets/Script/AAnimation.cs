@@ -79,6 +79,10 @@ public class AAnimation : AAnimationBase
 	void UpdatePosition()
 	{
 		//更新每一根关节的位置.
+		if(!PositionsList.ContainsKey(currentJointName))
+		{
+			return;
+		}
 		List<YamlSQTData> pList = PositionsList[currentJointName];
 		if(FindKeyFrames(pList))
 		{
@@ -94,6 +98,10 @@ public class AAnimation : AAnimationBase
 	void UpdateRotation()
 	{
 		//更新每一根关节的旋转信息.
+		if(!RotationList.ContainsKey(currentJointName))
+		{
+			return;
+		}
 		List<YamlSQTData> pList = RotationList[currentJointName];
 		if(FindKeyFrames(pList))
 		{
@@ -109,6 +117,10 @@ public class AAnimation : AAnimationBase
 	void UpdateScale()
 	{
 		//更新每一根关节的缩放信息.
+		if(!ScaleList.ContainsKey(currentJointName))
+		{
+			return;
+		}
 		List<YamlSQTData> pList = ScaleList[currentJointName];
 		if(FindKeyFrames(pList))
 		{

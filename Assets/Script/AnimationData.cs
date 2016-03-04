@@ -29,7 +29,9 @@ public class AnimationClipData
 	public int m_Bounds {set;get;}
 	public object m_ClipBindingConstant {set;get;}
 	public object m_AnimationClipSettings {set;get;}
+	[YamlIgnore]
 	public object m_EditorCurves {set;get;}
+	[YamlIgnore]
 	public object m_EulerEditorCurves {set;get;}
 	public object m_Events {set;get;}
 }
@@ -55,7 +57,9 @@ public class QuaternionCurveData
 {
 	public string time {set;get;}
 	public Quaternion value {set;get;}
+//	[YamlIgnore]
 	public Quaternion inSlope {set;get;}
+//	[YamlIgnore]
 	public Quaternion outSlope {set;get;}
 	public string tangentMode {set;get;}
 	public class Quaternion
@@ -88,7 +92,9 @@ public class Vector3CurveData
 {
 	public string time {set;get;}
 	public Vector3 value {set;get;}
+//	[YamlIgnore]
 	public Vector3 inSlope {set;get;}
+//	[YamlIgnore]
 	public Vector3 outSlope {set;get;}
 	public string tangentMode {set;get;}
 	public class Vector3
